@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Government Land Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= LOGIN ================= -->
+
+    <div id="loginPage" class="login-page">
+
+        <div class="login-box">
+
+            <div class="logo">
+                🏛️
+            </div>
+
+            <h1>Government Land Portal</h1>
+            <p class="subtitle">Administrative Login</p>
+
+            <form id="loginForm">
+
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Enter username" required>
+
+                <label>Password</label>
+
+                <input type="password" id="password" placeholder="Enter password" required>
+
+                <button type="submit" class="login-btn">
+                    Login
+                </button>
+
+                <p id="loginMessage"></p>
+
+            </form>
+
+            <div class="demo-login">
+                Demo: MOFASA / MOFASA123
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MAIN APPLICATION ================= -->
+
+    <div id="app" class="app hidden">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+
+                <div class="gov-logo">🏛️</div>
+
+                <div>
+                    <h2>Land Portal</h2>
+                    <span>Administration</span>
+                </div>
+
+            </div>
+
+
+            <nav>
+
+                <button class="nav-btn active" data-section="dashboard">
+                    🏠 Dashboard
+                </button>
+
+                <button class="nav-btn" data-section="khotiyan">
+                    📋 Khotiyan Management
+                </button>
+
+                <button class="nav-btn" data-section="payments">
+                    💰 Dakhila Payments
+                </button>
+
+                <button class="nav-btn" data-section="search">
+                    🔎 Search Record
+                </button>
+
+                <button class="nav-btn" data-section="logs">
+                    📜 System Logs
+                </button>
+
+                <button class="nav-btn" data-section="reports">
+                    📊 Reports
+                </button>
+
+            </nav>
+
+
+            <button id="logoutBtn" class="logout-btn">
+                🚪 Logout
+            </button>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <!-- HEADER -->
+
+            <header class="topbar">
+
+                <div>
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p>Government Land Management System</p>
+                </div>
+
+                <div class="admin-info">
+                    👤 Administrator
+                </div>
+
+            </header>
+
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <section id="dashboard" class="section active-section">
+
+                <div class="welcome-card">
+
+                    <div>
+
+                        <h2>Welcome to Government Land Portal</h2>
+
+                        <p>
+                            Manage Khotiyan records, land tax,
+                            Dakhila payments and official reports.
+                        </p>
+
+                    </div>
+
+                    <div class="welcome-icon">
+                        🏛️
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">📋</div>
+
+                        <div>
+                            <span>Total Records</span>
+                            <strong id="totalRecords">0</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">💰</div>
+
+                        <div>
+                            <span>Total Paid</span>
+                            <strong id="totalPaid">৳0.00</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">⚠️</div>
+
+                        <div>
+                            <span>Total Due</span>
+                            <strong id="totalDue">৳0.00</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">🗑️</div>
+
+                        <div>
+                            <span>Deleted Records</span>
+                            <strong id="deletedRecords">0</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>Recent Records</h3>
+
+                            <button class="small-btn" data-section="khotiyan">
+                                View All
+                            </button>
+
+                        </div>
+
+                        <div id="recentRecords"></div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>Quick Actions</h3>
+
+                        </div>
+
+                        <div class="quick-actions">
+
+                            <button data-section="khotiyan" class="quick-btn">
+                                ➕ Add Khotiyan
+                            </button>
+
+                            <button data-section="payments" class="quick-btn">
+                                💳 Process Payment
+                            </button>
+
+                            <button data-section="search" class="quick-btn">
+                                🔎 Search ID
+                            </button>
+
+                            <button data-section="reports" class="quick-btn">
+                                📄 Generate Report
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= KHOTIYAN ================= -->
+
+            <section id="khotiyan" class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>Khotiyan Management</h2>
+
+                        <p>
+                            Add and manage land ownership records.
+                        </p>
+
+                    </div>
+
+                    <button id="showAddForm" class="primary-btn">
+                        + Add New Record
+                    </button>
+
+                </div>
+
+
+                <!-- ADD FORM -->
+
+                <div id="addFormContainer" class="panel hidden">
+
+                    <h3>Add New Khotiyan</h3>
+
+                    <form id="landForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label>Khotiyan ID</label>
+
+                                <input type="number" id="landId" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Reference Name</label>
+
+                                <input type="text" id="refName" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Place Name</label>
+
+                                <input type="text" id="placeName" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Area (Decimal)</label>
+
+                                <input type="number" id="area" step="0.01" min="0" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Location</label>
+
+                                <select id="location" required>
+
+                                    <option value="">
+                                        Select Location
+                                    </option>
+
+                                    <option value="Urban">
+                                        Urban
+                                    </option>
+
+                                    <option value="Rural">
+                                        Rural
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div id="taxPreview" class="tax-preview hidden">
+
+                            <div>
+
+                                <span>Detected Land Type</span>
+
+                                <strong id="detectedType">
+                                    -
+                                </strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Total Tax</span>
+
+                                <strong id="previewTax">
+                                    ৳0.00
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button type="submit" class="primary-btn">
+                                Save Record
+                            </button>
+
+                            <button type="button" id="cancelAdd" class="secondary-btn">
+                                Cancel
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- RECORD TABLE -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h3>Active Records</h3>
+
+                        <input type="text" id="tableSearch" class="table-search" placeholder="Search records...">
+
+                    </div>
+
+                    <div class="table-container">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Place</th>
+                                    <th>Land Type</th>
+                                    <th>Area</th>
+                                    <th>Paid</th>
+                                    <th>Due</th>
+                                    <th>Action</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="landTableBody">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= PAYMENTS ================= -->
+
+            <section id="payments" class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>Dakhila Payment Queue</h2>
+
+                        <p>
+                            Add payments to the queue and process them.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-layout">
+
+                    <div class="panel">
+
+                        <h3>Add Payment</h3>
+
+                        <form id="paymentForm">
+
+                            <div class="form-group">
+
+                                <label>Khotiyan ID</label>
+
+                                <input type="number" id="paymentId" required>
+
+                            </div>
+
+
+                            <div id="paymentInfo" class="payment-info hidden">
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Payment Amount</label>
+
+                                <input type="number" id="paymentAmount" step="0.01" min="0" required>
+
+                            </div>
+
+
+                            <button type="submit" class="primary-btn full-width">
+                                Add to Queue
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>Payment Queue</h3>
+
+                            <span id="queueCount" class="badge">
+                                0
+                            </span>
+
+                        </div>
+
+                        <div id="paymentQueue">
+                        </div>
+
+
+                        <button id="processQueueBtn" class="primary-btn full-width">
+                            Process All Payments
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= SEARCH ================= -->
+
+            <section id="search" class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>Search Khotiyan</h2>
+
+                        <p>
+                            Search a land record using Khotiyan ID.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="search-box panel">
+
+                    <div class="search-input-wrapper">
+
+                        <input type="number" id="searchId" placeholder="Enter Khotiyan ID">
+
+                        <button id="searchBtn" class="primary-btn">
+                            Search
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div id="searchResult" class="search-result">
+                </div>
+
+            </section>
+
+
+            <!-- ================= LOGS ================= -->
+
+            <section id="logs" class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>System Logs</h2>
+
+                        <p>
+                            Recent system activities.
+                        </p>
+
+                    </div>
+
+                    <button id="clearLogsBtn" class="secondary-btn">
+                        Clear Logs
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div id="logsContainer">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= REPORTS ================= -->
+
+            <section id="reports" class="section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>Report Generator</h2>
+
+                        <p>
+                            Generate official land reports.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel report-form">
+
+                    <div class="form-group">
+
+                        <label>Report Name</label>
+
+                        <input type="text" id="reportName" placeholder="Official Land Report">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Report Date</label>
+
+                        <input type="date" id="reportDate">
+
+                    </div>
+
+
+                    <button id="generateReportBtn" class="primary-btn">
+                        📄 Generate & Download Report
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h3>Deleted Records</h3>
+
+                    <div id="deletedRecordsList">
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- DEVELOPER INFO POPUP -->
+    <div class="dev-container">
+        <button class="dev-btn" id="devBtn">Developers</button>
+        <div class="dev-popup" id="devPopup">
+            <ol>
+                <li>Sabbir Hosen Joy</li>
+                <li>Fatin Sarhad</li>
+                <li>Monira Akter Payel</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+
+    <div id="toast" class="toast">
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
